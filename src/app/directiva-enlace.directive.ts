@@ -13,13 +13,13 @@ export class DirectivaEnlaceDirective {
 
   @HostListener('mouseover') onMouseOver(){
     
-    this.el.nativeElement.textContent="Texto cambiado";
+    this.el.nativeElement.textContent=this.el.nativeElement.textContent.toUpperCase();
     this.el.nativeElement.id="cambiado";
 
   }
 
   @HostListener('mouseout') onMouseOut(){
-    this.el.nativeElement.textContent = "Otro texto salir";
+    this.el.nativeElement.textContent = this.el.nativeElement.textContent.toLowerCase();
     this.el.nativeElement.id=""
   }
 }

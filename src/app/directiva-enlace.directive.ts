@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Host, HostBinding, HostListener } from '@angular/core';
+import { Directive, ElementRef, Host, HostBinding, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[DirectivaEnlace]'
@@ -6,16 +6,23 @@ import { Directive, ElementRef, Host, HostBinding, HostListener } from '@angular
 export class DirectivaEnlaceDirective {
 
   @HostBinding('class.cambiado') private isCambiado:boolean=false;
-  private textoInicial!:string;
 
+  @Input() config = {
+    textoCambiado:'',
+    color:''
+  }
+
+  private textoInicial:String="";
   constructor(private el:ElementRef) { 
     
   }
 
   @HostListener('mouseover') onMouseOver(){
+    this.textoInicial = this.el.nativeElement.textContent;
     if (this.el.nativeElement.tagName==='A') {
-      this.el.nativeElement.textContent=this.el.nativeElement.textContent.toUpperCase();
+      this.el.nativeElement.textContent = this.config.textoCambiado;
       this.isCambiado=true;
+      this.el.nativeElement.style.borderColor=this.config.color;
     }
     
 
@@ -23,7 +30,7 @@ export class DirectivaEnlaceDirective {
 
   @HostListener('mouseout') onMouseOut(){
     if (this.el.nativeElement.tagName==='A') {
-      this.el.nativeElement.textContent = this.el.nativeElement.textContent.toLowerCase();
+      this.el.nativeElement.textContent = this.textoInicial;
       this.isCambiado=false;
     }
   }
